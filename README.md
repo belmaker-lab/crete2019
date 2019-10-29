@@ -7,7 +7,7 @@ October 2019
 <img src= "Crete_locations.png">
 
 
-<img src= "SeriolaDumerili.JPG" width = "480" align = "center">
+<img src= "SeriolaDumerili.JPG" width = "480" align = "middle">
 
 
 
