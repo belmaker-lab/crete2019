@@ -187,44 +187,39 @@ get_data_from_location <- function(location){
 # }
 
 # 
-# clean_full_data <- function(complete_data_function,get_terrain = F){
-#   useless.columns <- 
-#     colnames(complete_data_function)[which(stringr::str_detect(colnames(complete_data_function)," ID"))]
-#   
-#   
-#   terrain.columns <- 
-#     colnames(complete_data_function)[which(stringr::str_detect(colnames(complete_data_function),"[0-9]"))]
-#   
-#   terrain.data <- complete_data_function %>% select(TransID,terrain.columns)
-#   
-#   complete_data_function_cleaner <- complete_data_function %>% select(-c(terrain.columns,useless.columns))
-#   
-#   complete_data_function_cleaner <- complete_data_function %>% 
-#     select(-c(terrain.columns,useless.columns)) %>% 
-#     group_by(TransID) %>%
-#     nest() %>%
-#     mutate(numeric_id = rownames(.)) %>% #add running transID number
-#     unnest() %>% 
-#     mutate(Observer_Name = if_else(Observer == "first",
-#                                    `First Observer`,`Second Observer`), #change first/second to actual names
-#            Date = lubridate::dmy(Date), #format date
-#            Season = if_else(between(lubridate::month(Date),left = 3,right = 7),"Spring","Fall"), #create Season column
-#            Year = lubridate::year(Date)) %>% #create Year column
-#     rowwise() %>% 
-#            mutate(Mean_Depth = mean(c(`Depth Start`,`Depth End`),na.rm = T), #create Mean_Depth columnn
-#            Depth_Category = cut(Mean_Depth,
-#                                 breaks = c(0,9,17.4,Inf), #breaks for each category
-#                                 labels = c("shallow","medium","deep"))) #create Depth_Category columnn
-#   traditional.names <- c("Dor" = "Habonim",
-#                          "Michmoret" = "Gdor")
-#   
-#   complete_data_function_cleaner <- complete_data_function_cleaner %>% 
-#     mutate(Location=dplyr::recode(Location,!!!traditional.names))
-#   
-#   if (get_terrain) return(list(terrain.data,complete_data_function_cleaner))
-#   
-#   return(complete_data_function_cleaner)
-# }
+clean_full_data <- function(complete_data_function,get_terrain = F){
+  useless.columns <-
+    colnames(complete_data_function)[which(stringr::str_detect(colnames(complete_data_function)," ID"))]
+
+
+  terrain.columns <-
+    colnames(complete_data_function)[which(stringr::str_detect(colnames(complete_data_function),"[0-9]"))]
+
+  terrain.data <- complete_data_function %>% select(TransID,terrain.columns)
+
+  complete_data_function_cleaner <- complete_data_function %>% select(-c(terrain.columns,useless.columns))
+
+  complete_data_function_cleaner <- complete_data_function %>%
+    select(-c(terrain.columns,useless.columns)) %>%
+    group_by(TransID) %>%
+    nest() %>%
+    mutate(numeric_id = rownames(.)) %>% #add running transID number
+    unnest() %>%
+    mutate(Observer_Name = if_else(Observer == "first",
+                                   `First Observer`,`Second Observer`), #change first/second to actual names
+           Date = lubridate::dmy(Date), #format date
+           Season = if_else(between(lubridate::month(Date),left = 3,right = 7),"Spring","Fall"), #create Season column
+           Year = lubridate::year(Date)) %>% #create Year column
+    rowwise() %>%
+           mutate(Mean_Depth = mean(c(`Depth Start`,`Depth End`),na.rm = T), #create Mean_Depth columnn
+           Depth_Category = cut(Mean_Depth,
+                                breaks = c(0,9,17.4,Inf), #breaks for each category
+                                labels = c("shallow","medium","deep"))) #create Depth_Category columnn
+
+  if (get_terrain) return(list(terrain.data,complete_data_function_cleaner))
+
+  return(complete_data_function_cleaner)
+}
 
 
 # add_species_data <- function(complete_data_function_cleaner){
