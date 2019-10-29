@@ -13,4 +13,4 @@ full <- nz %>% mutate(Site = as.character(Site)) %>%
 
 write_csv(full, here("UVC_crete_2019.csv"))
 
-clean_full_data(crete_data,get_terrain = T)[[1]]
+terrain_data <- clean_full_data(crete_data, get_terrain = T)[[1]]
