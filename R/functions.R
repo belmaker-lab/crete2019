@@ -187,10 +187,9 @@ get_data_from_location <- function(location){
 # }
 
 # 
-clean_full_data <- function(complete_data_function,get_terrain = F){
+clean_full_data <- function(complete_data_function, get_terrain = F){
   useless.columns <-
     colnames(complete_data_function)[which(stringr::str_detect(colnames(complete_data_function)," ID"))]
-
 
   terrain.columns <-
     colnames(complete_data_function)[which(stringr::str_detect(colnames(complete_data_function),"[0-9]"))]
@@ -203,8 +202,9 @@ clean_full_data <- function(complete_data_function,get_terrain = F){
     select(-c(terrain.columns,useless.columns)) %>%
     group_by(TransID) %>%
     nest() %>%
+    ungroup() %>% 
     mutate(numeric_id = rownames(.)) %>% #add running transID number
-    unnest() %>%
+    unnest(cols = c(data)) %>%
     mutate(Observer_Name = if_else(Observer == "first",
                                    `First Observer`,`Second Observer`), #change first/second to actual names
            Date = lubridate::dmy(Date), #format date
