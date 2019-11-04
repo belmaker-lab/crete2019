@@ -4,11 +4,10 @@ Underwater fish census surveys in Crete
 
 
 October 2019
-<img src= "Crete_locations.png">
 
+![Dive locations in crete](Crete_locations.png)
 
-<img src= "SeriolaDumerili.JPG" width = "480" align = "middle">
-
+![Seriola dumerili on the transect](SeriolaDumerili.JPG)
 
 
 
