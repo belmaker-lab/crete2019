@@ -1,11 +1,11 @@
 library("googlesheets")
 library("tidyverse")
 
-# This sript contains functions used for getting.
-# the bioblitz data from google drive. Which are:
-# get_species_data() used to create a species data table. 
-# get_list_of_locations() used to read location file.        
-# gs_read_delayed() used to get individual worksheets.      
+# This script contains functions used for getting the bioblitz data from google drive.
+# Functions description:
+# get_species_data() is used to create a species data table. 
+# get_list_of_locations() is used to read location file.        
+# gs_read_delayed() is used to get individual worksheets.      
 # get_data_from_location() creates a dataset from each file. 
 # create_full_data() creates a raw dataset of all locations.  USE THIS IF YOU WANT DATA AS IS!
 # clean_full_data() can create TWO datasets:
