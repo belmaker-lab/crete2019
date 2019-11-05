@@ -21,8 +21,9 @@ ggplot(crete_locations) +
   theme(text = element_text(size = 16,  family = "Segoe UI"))
 # dev.off()
 
-# TRIP/SAMPLING META DATA
+# TRIP/SAMPLING META DATA#
 crete_data <- read_csv("UVC_crete_2019.csv", col_types = cols(Notes = "c")) %>%
+  mutate(Species = stringr::str_to_sentence(Species)) %>% # fix Species == "ThalASSoma pavo"
   filter(Observer == "first") %>% # Note: only first observer data included!
   select("lon", "lat", "TransID", "Depth Start", "Depth End",
          "Species", "Confidence", "Amount", "Length", "Depth_Category", "Notes")
