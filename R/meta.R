@@ -4,9 +4,9 @@ library("tidyverse")
 library(sf)
 library(extrafont)
 
-crete_locations <- read.csv("~/Lab stuff/Crete/CreteDives.csv")
-colnames(crete_locations) <- c("lon", "lat", "date", "dive")
-head(crete_locations)
+crete_locations <- read_csv("~/Lab stuff/Crete/CreteDives.csv")
+colnames(crete_locations) <- c()
+crete_locations
 
 # Load shapefile
 theme_set(theme_bw())
@@ -15,9 +15,9 @@ gr_shp <- st_read("~/Lab stuff/Crete/greece shp/Crete.shp")
 # png("crete2019/Crete_locations.png", height = 800, width = 1600, bg = 'transparent')
 ggplot(crete_locations) +
   geom_sf(data = gr_shp) + 
-  geom_jitter(aes(x = lon, y = lat, fill = date), cex = 10, alpha = 0.5, shape = 24) + 
+  geom_jitter(aes(x = lon, y = lat, fill = site), cex = 10, alpha = 0.5, shape = 24) + 
   geom_text(aes(x = lon, y = lat, label = dive), inherit.aes = TRUE) +
-  labs(title = "Crete survey locations", x = "", y = "", fill = "Date") + 
+  labs(title = "Crete survey locations", x = "", y = "", fill = "Site") + 
   scale_fill_brewer(palette = "YlOrRd") +
   theme(text = element_text(size = 16,  family = "Segoe UI"))
 # dev.off()
