@@ -32,11 +32,11 @@ colnames(crete_data) <- c("lon", "lat", "trans_id", "depth_start", "depth_end", 
 crete_data
 # write_csv(crete_data, "data_for_analysis.csv")
 
-species <- crete_data %>% distinct(Species)
-count(species)
+crete_species <- crete_data %>% distinct(species)
+count(crete_species)
 # 71 species
 
-transects <- crete_data %>% distinct(TransID)
+transects <- crete_data %>% distinct(trans_id)
 count(transects)
 # 168 transects
 count(transects)/8
