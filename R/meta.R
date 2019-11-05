@@ -8,6 +8,7 @@ crete_locations <- read.csv("~/Lab stuff/Crete/CreteDives.csv")
 colnames(crete_locations) <- c("lon", "lat", "date", "dive")
 head(crete_locations)
 
+# Load shapefile
 theme_set(theme_bw())
 gr_shp <- st_read("~/Lab stuff/Crete/greece shp/Crete.shp")
 
@@ -21,15 +22,14 @@ ggplot(crete_locations) +
   theme(text = element_text(size = 16,  family = "Segoe UI"))
 # dev.off()
 
-# TRIP/SAMPLING META DATA#
+# TRIP/SAMPLING META DATA
 crete_data <- read_csv("UVC_crete_2019.csv", col_types = cols(Notes = "c")) %>%
   mutate(Species = stringr::str_to_sentence(Species)) %>% # fix Species == "ThalASSoma pavo"
   filter(Observer == "first") %>% # Note: only first observer data included!
-  select("lon", "lat", "TransID", "Depth Start", "Depth End",
+  select("lon", "lat", "TransID", "SiteID",  "Depth Start", "Depth End",
          "Species", "Confidence", "Amount", "Length", "Depth_Category", "Notes")
-colnames(crete_data) <- c("lon", "lat", "trans_id", "depth_start", "depth_end", "species",
-                          "confidence", "n", "length", "depth", "notes")
-
+colnames(crete_data) <- c("lon", "lat", "trans_id", "site_id", "depth_start", "depth_end", "species",
+                          "confidence", "sp_n", "length", "depth", "notes")
 crete_data
 # write_csv(crete_data, "data_for_analysis.csv")
 
