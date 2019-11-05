@@ -22,11 +22,13 @@ ggplot(crete_locations) +
 # dev.off()
 
 # TRIP/SAMPLING META DATA
-crete_data <- read_csv("UVC_crete_2019.csv", col_types = cols(Notes = "c")) %>% 
-  select("lon", "lat", "TransID", "Observer", "Depth Start", "Depth End",
-         "Species", "Confidence", "Amount", "Length", "Depth_Category", "Notes") %>% 
-  filter(Observer == "first")
-# Note: only first observer data included!
+crete_data <- read_csv("UVC_crete_2019.csv", col_types = cols(Notes = "c")) %>%
+  filter(Observer == "first") %>% # Note: only first observer data included!
+  select("lon", "lat", "TransID", "Depth Start", "Depth End",
+         "Species", "Confidence", "Amount", "Length", "Depth_Category", "Notes")
+colnames(crete_data) <- c("lon", "lat", "trans_id", "depth_start", "depth_end", "species",
+                          "confidence", "n", "length", "depth", "notes")
+
 crete_data
 # write_csv(crete_data, "data_for_analysis.csv")
 
