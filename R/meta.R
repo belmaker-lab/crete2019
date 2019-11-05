@@ -34,11 +34,12 @@ crete_data
 
 crete_species <- crete_data %>% distinct(species)
 count(crete_species)
-# 71 species
+# 71 species (2 observers)
+# 59 species (first observer only)
 
 transects <- crete_data %>% distinct(trans_id)
 count(transects)
-# 168 transects
+# 167 transects
 count(transects)/8
 count(transects)/8
 
