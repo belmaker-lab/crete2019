@@ -1,40 +1,44 @@
 library("vegan")
 library("tidyverse")
 
-# load data (see 'meta.R' for wrangling history of this file)
-# Calculate slope (=|Depth Start-Depth End|)
-# Reorder columns
+# load data (see 'get_crete_data.R' for wrangling history of this file)
 crete_data <- read_csv("data_for_analysis.csv", col_types = cols(notes = "c")) %>% # col_types to avoid error parsing this column
-  mutate(slope = abs(depth_start - depth_end)) %>% 
-  select(lon, lat, trans_id, site_id, depth, slope, species, sp_n, length)
-crete_data
+  select(lon, lat, trans_id, site_id, species, sp_n, length) # Reorder columns and keep only relevant ones
+crete_data$species <- gsub(pattern = " ", replacement = "_", x = crete_data$species) # remove space from species names
+
+# Create a dataframe with indormative site names (north/south + date):
+crete_locations <- crete_locations <- read_csv("~/Lab stuff/Crete/CreteDives.csv")
+colnames(crete_locations) <- c("lon", "lat", "site", "dive")
+crete_data_full <- left_join(x = crete_locations, y = crete_data, by = c("lon", "lat"), name = "site")
+crete_data_full <- crete_data_full %>% 
+  mutate(side = str_extract(.$site, "\\D")) %>% 
+  select(site, side, trans_id, species, sp_n)
+crete_data_full
 
 # Transform to species matrix
-crete_mat <- crete_data %>% 
-group_by(site_id, trans_id, species) %>% # Note it only shows sites and species (with coordinate-locations)
-  summarise(n = mean(sp_n)) %>% 
+crete_mat <- crete_data_full %>% 
+  group_by(site, side, trans_id, species) %>%
+  summarise(n = max(sp_n)) %>% 
   spread(species, n, fill = 0)
-
 crete_mat
-# First species is at col 2 (Apogon imberbis)
 
 ### NMDS non metric multi-dimentional scaling
 # nmds_data <- decostand(crete_mat[,2:ncol(crete_mat)], method = "log")
-
 nmds_data <- crete_mat %>% ungroup() %>% as.data.frame()
 rownames(nmds_data) <- nmds_data$trans_id
-nmds_data <- nmds_data %>% select(-c(trans_id, site_id))
+nmds_data <- nmds_data %>% select(-c(trans_id, site, side))
 nmds_data
 
-sites <- factor(crete_mat$site_id)
-sites <- gsub(pattern = "ASSECret", replacement = "C", x = sites, ignore.case = FALSE)
-sites <- substr(sites, 1, 8)
-sites
-col_loc <- as.numeric(sites) # set color for each type of site (north/south)
+sites <- factor(crete_mat$site)
+col_loc <- c("aquamarine3", "antiquewhite4","gold3", "palevioletred", "slateblue3",
+             "orange2", "yellowgreen", "deeppink") # set color for each type of site
+side <- factor(crete_mat$side)
+col_sn <- c("cyan4", "brown")
 
-ord <- metaMDS(nmds_data, trace = FALSE)
+ord <- metaMDS(nmds_data, trace = FALSE, k = 2)
 stressplot(ord)
 plot(ord, display = "sites")
 ordihull(ord, groups = sites, col = col_loc, draw = "polygon", label = F)
+ordihull(ord, groups = side, col = col_sn, draw = "polygon", label = T)
 
 
