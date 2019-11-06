@@ -29,14 +29,18 @@ rownames(nmds_data) <- nmds_data$trans_id
 nmds_data <- nmds_data %>% select(-c(trans_id, site, side))
 nmds_data
 
+# Preps for convex hulls: one of the sites (site = day diving); one of the location (south/north)
 sites <- factor(crete_mat$site)
 col_loc <- c("aquamarine3", "antiquewhite4","gold3", "palevioletred", "slateblue3",
              "orange2", "yellowgreen", "deeppink") # set color for each type of site
 side <- factor(crete_mat$side)
 col_sn <- c("cyan4", "brown")
 
+# Run NMDS
 ord <- metaMDS(nmds_data, trace = FALSE, k = 2)
 stressplot(ord)
+
+# Plot NMDS with convex hulls
 plot(ord, display = "sites")
 ordihull(ord, groups = sites, col = col_loc, draw = "polygon", label = F)
 ordihull(ord, groups = side, col = col_sn, draw = "polygon", label = T)
