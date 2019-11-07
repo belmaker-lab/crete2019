@@ -26,7 +26,8 @@ crete_data <- read_csv("UVC_crete_2019.csv", col_types = cols(Notes = "c")) %>%
   mutate(Species = stringr::str_to_sentence(Species)) %>% # fix Species == "ThalASSoma pavo"
   filter(Observer == "first") %>% # Note: only first observer data included!
   select("lon", "lat", "TransID", "SiteID",  "Depth Start", "Depth End",
-         "Species", "Confidence", "Amount", "Length", "Depth_Category", "Notes")
+         "Species", "Confidence", "Amount", "Length", "Depth_Category", "Notes") %>%
+  mutate_all(~replace(., . == "Epinephelus costea", "Epinephelus costae"))
 colnames(crete_data) <- c("lon", "lat", "trans_id", "site_id", "depth_start", "depth_end", "species",
                           "confidence", "sp_n", "length", "depth", "notes")
 crete_data
