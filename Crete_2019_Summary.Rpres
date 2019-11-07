@@ -1,19 +1,14 @@
-Crete 2019 summary
+Crete_2019_Summary
 ========================================================
+author: Belmaker Lab
+date: October 2019
 autosize: true
 
-
 ![Seriola dumerili](SeriolaDumerili.JPG)
-***
-
-Belmaker Lab
-
-October 2019
-
 
 META
 ========================================================
-![Map of dives](Crete_locations.png)
+![Map of dives](figures/Crete_locations.png)
 ***
 
 - 14 days (including flights)
@@ -24,9 +19,12 @@ META
 
 SITES
 ========================================================
-![NMDS grouped by sites](NMDS_site.png)
+![NMDS grouped by sites](figures/NMDS_site.png)
 
 SITES
 ========================================================
-![NMDS grouped by location](NMDS_South_North.png)
+![NMDS grouped by location](figures/NMDS_South_North.png)
 
+NETWORKS
+========================================================
+![Network for selected species]()
