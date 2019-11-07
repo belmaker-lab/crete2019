@@ -4,8 +4,10 @@ library("tidyverse")
 library(sf)
 library(extrafont)
 
-crete_locations <- read_csv("~/Lab stuff/Crete/CreteDives.csv")
-colnames(crete_locations) <- c("lon", "lat", "site", "dive")
+crete_locations <- read_csv("~/Lab stuff/Crete/CreteDives.csv") %>% 
+  mutate(site_name = str_extract(.$Name, "\\d\\d"))
+colnames(crete_locations) <- c("lon", "lat", "site", "dive", "site_name")
+crete_locations$site_name <- as.factor(crete_locations$site_name)
 crete_locations
 
 # Load shapefile
@@ -15,11 +17,15 @@ gr_shp <- st_read("~/Lab stuff/Crete/greece shp/Crete.shp")
 # png("Crete_locations.png", height = 800, width = 1600, bg = 'transparent')
 ggplot(crete_locations) +
   geom_sf(data = gr_shp) + 
-  geom_jitter(aes(x = lon, y = lat, fill = site), cex = 10, alpha = 0.5, shape = 24) + 
-    labs(title = "Crete survey locations", x = "", y = "", fill = "Site") + 
+  geom_jitter(aes(x = lon, y = lat, fill = site_name), cex = 10, alpha = 0.5, shape = 24) + 
+  geom_text(aes(x = lon, y = lat, label = crete_locations$site_name), check_overlap = TRUE) +
+  labs(title = "Crete survey locations", x = "", y = "", fill = "Site (date)") + 
   scale_fill_brewer(palette = "Dark2") +
   theme(text = element_text(size = 16,  family = "Segoe UI"))
 # dev.off()
+
+# source("~/R/code_snips/opendir.R")
+# opendir()
 
 # TRIP/SAMPLING META DATA
 crete_data <- read_csv("UVC_crete_2019.csv", col_types = cols(Notes = "c")) %>%
