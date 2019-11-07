@@ -27,4 +27,4 @@ SITES
 
 NETWORKS
 ========================================================
-![Network for selected species]()
+![Network for selected species](figures/crete_network.png)
