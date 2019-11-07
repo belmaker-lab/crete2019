@@ -16,6 +16,7 @@ META
 - 22 sites (64 dives)
 - 168 transects (~21 transects per day)
 - 71 species recorded
+- 10999 observations
 
 SITES
 ========================================================
