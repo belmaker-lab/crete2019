@@ -11,7 +11,7 @@ META
 ![Map of dives](figures/Crete_locations.png)
 ***
 
-- 14 days (including flights)
+- 14 days
 - 8 diving days
 - 22 sites (64 dives)
 - 168 transects (~21 transects per day)
