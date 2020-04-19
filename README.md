@@ -12,7 +12,10 @@ The repo contains:
 - `CreteDives.csv`: Dive locations point data
 ![Dive locations in crete](figures/Crete_locations.png)
 
+<center>
 ![Seriola dumerili on the transect](SeriolaDumerili.JPG)
+</center>
+
 
 
 
